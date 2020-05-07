@@ -1,16 +1,22 @@
+'use strict'
+
 const ValitadionContract = require('../validator/fluent-validator')
 const repository = require('../repositories/order-repository')
 const guid = require('guid')
+const authService = require('../services/auth_services')
 
 exports.post = async (req, res, next) => {
-    let data = {
-        customer: req.body.customer,
-        number: guid.raw().substring(0,6), //gera um guid pegando os 6 primeiros caracteres
-        items: req.body.items
-    }
-    console.log(data.items)
-    try{        
-        await repository.create(data)
+    try{
+        //recuperar o token
+        let token = req.body.token || req.query.token || req.headers['x-access-token']
+        //Decodificar o token
+        let data = await authService.decodeToken(token)
+
+        await repository.create({
+            customer: data.id,
+            number: guid.raw().substring(0,6), //gerando guid aleatoria
+            items: req.body.items
+        })
         res.status(201).send({
             message: 'Pedido cadastrado com sucesso!'
         })

@@ -39,12 +39,7 @@ const schema = new Schema({
     tags :[{ //Array de string
         type: String,
         require: true
-    }],
-    image: {
-        type: String, //caminho da imagem
-        required: true, //eh requerido
-        trim: true //retira os espacos da string
-    }
+    }]
 }) 
 
 /**

@@ -1,8 +1,15 @@
+'use strict'
+
 const express = require('express')
 const router = express.Router()
-const controllerCustomer = require('../controllers/customer-controller')//importando o controler
+const controller = require('../controllers/customer-controller')//importando o controler
+const authService = require('../services/auth_services')
 
-router.post('/', controllerCustomer.post)
-router.get('/', controllerCustomer.get)
 
-module.exports = router;
+router.post('/', controller.post)
+router.post('/authenticate', controller.authenticate) //autentica usuario
+router.post('/refresh-token', authService.authorize, controller.refreshToken)
+router.get('/', controller.get)
+
+
+module.exports = router

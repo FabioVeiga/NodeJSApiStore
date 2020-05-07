@@ -24,8 +24,21 @@ const customerRoute = require('../src/routes/customer-route')
 const customerOrder = require('../src/routes/order-route')
 
 //o APP ira usar a biblioteca body-parser
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false })) //codificando a url
+app.use(bodyParser.json({
+    limit: '5mb' //limite do json
+}))
+app.use(bodyParser.urlencoded({
+        extended: false
+    })
+) //codificando a url
+
+//Habilita oo CORS 
+app.use( function(req, res, next) {
+    res.header('Access-Control-Allow-Origin','*')//liberar URLs que vao ter acesso ou mantar * para todos
+    res.header('Access-Control-Allow-Headers','Origin, X-RequestedWith, Content-Type, Accept, x-access-token')
+    res.header('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, OPTIONS')
+    next()
+})
 
 //carregar as rotas da sessao
 app.use('/', indexRoute)

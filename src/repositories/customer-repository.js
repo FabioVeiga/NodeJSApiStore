@@ -15,3 +15,17 @@ exports.create = async (data) => {
 exports.get = async () =>{
     return await Customer.find()
 }
+
+//metodo para autenticacao
+exports.authenticate = async (data) =>{
+    const res = await Customer.findOne({
+        email: data.email,
+        password: data.password
+    })
+    return res
+}
+
+exports.getById = async (id) =>{
+    const res = await Customer.findById(id)
+    return res
+}

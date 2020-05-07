@@ -83,7 +83,7 @@ exports.post = async (req, res, next) => {
         res.status(201).send({
             message: 'Produto cadastrado com sucesso!'
         })
-    }catch{
+    }catch(erro){
         res.status(400).send({
             message: 'Falha ao cadastra o produto!' ,
             data: erro
